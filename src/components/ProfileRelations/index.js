@@ -50,3 +50,29 @@ export const ProfileRelationsBoxWrapper = styled(Box)`
     }
   }
 `;
+
+export function ProfileRelationsBox(props) {
+  console.log(props.items)
+  return (
+    <ProfileRelationsBoxWrapper >
+      <h2 className="smallTitle">
+        {props.title}({props.items.length})
+      </h2>
+      <ul>
+        {
+          !props.items && props.items.map((item) => {
+            return (
+              <li key={item.id}>
+                <a href={`/users/${item.login}`}>
+                  <img src={`https://github.com/${item.login}.png`}
+                  />
+                  <span>{item.login}</span>
+                </a>
+              </li>
+            )
+          })
+        }
+      </ul>
+    </ProfileRelationsBoxWrapper>
+  )
+}
