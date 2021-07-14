@@ -52,7 +52,7 @@ export const ProfileRelationsBoxWrapper = styled(Box)`
 `;
 
 export function ProfileRelationsBox(props) {
-  console.log(props.items)
+  const list = props.items;
   return (
     <ProfileRelationsBoxWrapper >
       <h2 className="smallTitle">
@@ -60,7 +60,7 @@ export function ProfileRelationsBox(props) {
       </h2>
       <ul>
         {
-          !props.items && props.items.map((item) => {
+          !!list && list.slice(0, 6).map((item) => {
             return (
               <li key={item.id}>
                 <a href={`/users/${item.login}`}>
