@@ -10,7 +10,10 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     font-family: sans-serif;
-    background-color: #D9E6F6;
+    background-image: url('https://www.chromethemer.com/download/hd-wallpapers/lone-space-3840x2160.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
   }
   #__next {
     display: flex;

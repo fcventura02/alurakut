@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Box = styled.div`
-background: #FFFFFF;
+background: rgba(253, 253, 255, 0.68);;
 border-radius: 8px;
 padding: 16px;
 /* CSS Pré-Pronto */

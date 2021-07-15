@@ -1,6 +1,5 @@
 import { AlurakutProfileSidebarMenuDefault } from "../../lib/AlurakutCommons";
 import { Box } from "../Box";
-import { ProfileRelationsBoxWrapper } from "../ProfileRelations";
 
 export function ProfilesideBar(props) {
 
