@@ -1,12 +1,15 @@
-import { Container, MainGrid } from '../src/components/MainGrid'
-import { Box } from '../src/components/Box'
-import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons'
-import { ProfileRelationsBoxWrapper, ProfileRelationsBox } from '../src/components/ProfileRelations'
 import React, { useEffect, useState } from 'react'
-import { ProfilesideBar } from '../src/components/ProfilesideBar'
+import nookies from 'nookies'
+import jwt from 'jsonwebtoken'
 
-export default function Home() {
-  const user = "fcventura02";
+import { Box } from '../src/components/Box'
+import { Container, MainGrid } from '../src/components/MainGrid'
+import { ProfilesideBar } from '../src/components/ProfilesideBar'
+import { ProfileRelationsBoxWrapper, ProfileRelationsBox } from '../src/components/ProfileRelations'
+import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons'
+
+export default function Home(props) {
+  const user = props.githubUser;
   const peopleFavorites = [
     'Juunegreiros', 'peas', 'omariosouto',
     'rafaballerini', 'marcobrunodev'
@@ -51,7 +54,6 @@ export default function Home() {
 
   useEffect(() => {
     apiGitHubGetFollowers()
-    /* Api GraphQL */
     apiDatoPost()
   }, [])
 
@@ -95,7 +97,7 @@ export default function Home() {
             <h2 className="subTitle">
               O que voce deseja fazer ?
             </h2>
-            <form onSubmit={(e)=>handleChange(e) }>
+            <form onSubmit={(e) => handleChange(e)}>
               <div>
                 <input
                   placeholder="Qual vai ser o nome da sua comunidade?"
@@ -165,4 +167,29 @@ export default function Home() {
       </MainGrid>
     </>
   )
+}
+
+export async function getServerSideProps(context) {
+  const cookies = nookies.get(context)
+  const token = cookies.USER_TOKEN
+  const { isAuthenticated } = await fetch('https://alurakut.vercel.app/api/auth', {
+    headers: {
+      Authorization: token
+    }
+  })
+    .then((resposta) => resposta.json())
+  if (!isAuthenticated) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      }
+    }
+  }
+  const { githubUser } = jwt.decode(token)
+  return {
+    props: {
+      githubUser
+    }
+  }
 }
