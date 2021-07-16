@@ -7,7 +7,6 @@ export default function LoginScreen() {
 	const [githubUser, setGithubUser] = React.useState('');
 	const handleChange = (e) => {
 		e.preventDefault();
-		console.log('Usuário: ', githubUser)
 		fetch('https://alurakut.vercel.app/api/login', {
 			method: 'POST',
 			headers: {
