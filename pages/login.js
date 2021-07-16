@@ -1,5 +1,4 @@
 import React from 'react';
-// Hook do NextJS
 import { useRouter } from 'next/router';
 import nookies from 'nookies';
 
@@ -18,7 +17,6 @@ export default function LoginScreen() {
 		})
 			.then(async (respostaDoServer) => {
 				const dadosDaResposta = await respostaDoServer.json()
-				console.log(dadosDaResposta);
 				const token = dadosDaResposta.token;
 				nookies.set(null, 'USER_TOKEN', token, {
 					path: '/',
