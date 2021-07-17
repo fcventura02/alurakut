@@ -49,7 +49,17 @@ export default function communitsPage(props) {
   function handleChangeCommunits(arr) {
     setCommunities([...communities, arr])
   }
-
+  function backPage() {
+    const calcCount = contador - 6
+    const calcLimit = limitPage === communities.length ? communities.length - 1 : limitPage - 6
+    setContador(calcCount < 0 ? 0 : calcCount)
+    setLimitPage(calcLimit < 6 ? 6 : calcLimit)
+  }
+  function nextPage() {
+    const calcLimit = limitPage + 6
+    setContador(limitPage)
+    setLimitPage(calcLimit > communities.length ? communities.length : calcLimit)
+  }
   return (
     <>
       <AlurakutMenu githubUser={user} />
@@ -78,16 +88,10 @@ export default function communitsPage(props) {
                 mostrando <sapn>{contador + 1}-{limitPage}</sapn> de <sapn>{communities.length}</sapn>
               </p>
               <div>
-                <button onClick={() => {
-                  setContador(contador - 6)
-                  setLimitPage(limitPage - 6)
-                }} disabled={contador === 0 && true}>
+                <button onClick={() => backPage()} disabled={contador === 0 && true}>
                   anterior
                 </button>
-                <button onClick={() => {
-                  setContador(limitPage)
-                  setLimitPage(limitPage + 6)
-                }} disabled={!(limitPage < communities.length) && true}>
+                <button onClick={() => nextPage()} disabled={!(limitPage < communities.length) && true}>
                   proxíma
                 </button>
               </div>
