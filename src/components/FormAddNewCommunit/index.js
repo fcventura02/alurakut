@@ -11,17 +11,31 @@ export default function FormAddNewCommunit(props) {
 			creatorSlug: user
 		}
 		if (!!comunidade.title && !!comunidade.imageurl)
-			fetch('/api/comunidades', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(comunidade)
-			})
-				.then(async (resp) => {
-					const dados = await resp.json();
-					props.fn(dados.registroCriado)
+			if (validURL(comunidade.imageurl))
+				fetch('/api/comunidades', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(comunidade)
 				})
+					.then(async (resp) => {
+						const dados = await resp.json();
+						props.fn(dados.registroCriado)
+					})
+			else {
+				console.log("url inválida")
+			}
+	}
+
+	function validURL(str) {
+		var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+			'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+			'((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+			'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+			'(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+			'(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+		return !!pattern.test(str);
 	}
 
 	return (
