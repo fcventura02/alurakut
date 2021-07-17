@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     font-family: 'Rubik', sans-serif;
-    background-image: url('https://www.chromethemer.com/download/hd-wallpapers/lone-space-3840x2160.jpg');
+    background-image: url('https://www.chromethemer.com/download/hd-wallpapers/lone-space-1920x1080.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

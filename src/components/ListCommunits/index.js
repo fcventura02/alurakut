@@ -31,6 +31,9 @@ export const ListCommunits = styled(Box)`
 			span{
 				font-weight: 700;
 			}
+			@media(max-width: 860px){
+				max-width: 80px;
+			}
 		}
 	}
   ul {

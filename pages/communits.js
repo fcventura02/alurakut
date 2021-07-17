@@ -36,7 +36,6 @@ export default function communitsPage(props) {
     })
       .then((response) => response.json())
       .then((resp) => {
-        console.log(resp.data.allCommunities.length)
         return setCommunities([...resp.data.allCommunities])
       })
       .catch((err) => console.log({ dato: err }))
@@ -58,7 +57,6 @@ export default function communitsPage(props) {
   }
   function nextPage() {
     const calcLimit = limitPage + 6
-    setLastLimit(limitPage)
     setContador(limitPage)
     setLimitPage(calcLimit > communities.length ? communities.length : calcLimit)
   }
