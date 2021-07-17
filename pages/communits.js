@@ -48,15 +48,17 @@ export default function communitsPage(props) {
 
   function handleChangeCommunits(arr) {
     setCommunities([...communities, arr])
+    setToogle(!toogle)
   }
   function backPage() {
     const calcCount = contador - 6
-    const calcLimit = limitPage === communities.length ? communities.length - 1 : limitPage - 6
+    const calcLimit = limitPage === communities.length ? communities.length - (communities.length - contador): limitPage - 6
     setContador(calcCount < 0 ? 0 : calcCount)
     setLimitPage(calcLimit < 6 ? 6 : calcLimit)
   }
   function nextPage() {
     const calcLimit = limitPage + 6
+    setLastLimit(limitPage)
     setContador(limitPage)
     setLimitPage(calcLimit > communities.length ? communities.length : calcLimit)
   }
@@ -81,7 +83,7 @@ export default function communitsPage(props) {
               Nova comunidade
             </button>
             <Box style={{ display: toogle ? "block" : "none" }}>
-              <FormAddNewCommunit githubUser={user} fn={handleChangeCommunits} />
+              <FormAddNewCommunit githubUser={user} fn={handleChangeCommunits}/>
             </Box>
             <Container className="container_page">
               <p className="contador">
