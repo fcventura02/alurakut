@@ -28,6 +28,7 @@ export default function communitsPage(props) {
             id,
             title,
             imageurl,
+            description,
             creatorSlug
           }
         }`
