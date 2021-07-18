@@ -6,6 +6,15 @@ border-radius: 8px;
 padding: 16px;
 /* CSS Pré-Pronto */
 margin-bottom: 10px;
+.containButton{
+	margin-bottom: 10px;
+	button{
+		margin-right: 10px;
+		&.isSelect{
+			background-color: var(--colorSecondary);
+		}
+	}
+}
 .boxMenuPath{
 	a {
 			font-size: 12px;
@@ -69,7 +78,7 @@ hr {
 	border-color: transparent;
 	border-bottom-color: #ECF2FA;
 }
-input {
+input, textarea {
 	width: 100%;
 	background-color: #F4F4F4;
 	color: #333333;
@@ -81,6 +90,11 @@ input {
 		color: #333333;
 		opacity: 1;
 	}
+}
+textarea{
+	max-width: 500px;
+	min-height: 50px;
+	border-radius: 10px;
 }
 button {
 	border: 0;
