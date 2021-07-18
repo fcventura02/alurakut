@@ -15,6 +15,47 @@ margin-bottom: 10px;
 		}
 	}
 }
+.scrapsContainner{
+.scrapsContain{
+	display: flex;
+	padding: 10px;
+	background-color: var(--backgroundPrimary);
+	div{
+		display: flex;
+		position:relative;
+		flex-direction: column;
+		max-width: 120px;
+		padding-right: 15px;
+		img{
+			width: 70px;
+			border-radius: 50%;
+		}
+		span{
+			display: block;
+			font-size: 0.85rem;
+			color: var(--textTertiaryColor)
+		}
+		&:before {
+          content: " ";
+          display: block;
+          position: absolute;
+					width: 1px;
+					background-color: var(--textQuarternaryColor);
+          margin: auto;
+          top: 0;
+					right: 10px;
+          bottom: 0;
+			}
+	}
+	&:first-child {
+    border-radius: 8px 8px 0 0;
+	}
+	&:nth-child(odd) { 
+		background: var(--backgroundQuarternary); 
+	}
+}
+}
+
 .boxMenuPath{
 	a {
 			font-size: 12px;

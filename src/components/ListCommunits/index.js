@@ -56,12 +56,14 @@ export const ListCommunits = styled(Box)`
 		background: var(--backgroundPrimary); 
 		height: 102px;
 		align-items: center;
-
-	}
-	li:first-child {
+		&:first-child {
     border-radius: 8px 8px 0 0;
+		}
+		&:nth-child(odd) { 
+			background: var(--backgroundQuarternary); 
+		}
 	}
-	li:nth-child(odd) { background: var(--backgroundQuarternary); }
+	
   ul li a {
     display: flex;
 		align-items: center;

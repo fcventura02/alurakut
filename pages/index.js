@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import nookies from 'nookies'
 import jwt from 'jsonwebtoken'
+import { format } from 'date-fns'
 
 import { Box } from '../src/components/Box'
 import { Container, MainGrid } from '../src/components/MainGrid'
@@ -55,10 +56,34 @@ export default function Home(props) {
       .then((resp) => setCommunities([...resp.data.allCommunities]))
       .catch((err) => console.log({ dato: err }))
   }
+  function apiDatoPostScraps() {
+    fetch('https://graphql.datocms.com/', {
+      method: 'POST',
+      headers: {
+        'Authorization': '90efc1f09ee724709d4d79ec37063c',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        query: `query{
+          allScraps {
+            id,
+            createdAt,
+            description,
+            creatorslug
+          }
+        }`
+      }),
+    })
+      .then((response) => response.json())
+      .then((resp) => setScraps([...resp.data.allScraps]))
+      .catch((err) => console.log({ dato: err }))
+  }
 
   useEffect(() => {
     apiGitHubGetFollowers()
     apiDatoPost()
+    apiDatoPostScraps()
   }, [])
 
   function handleChangeCommunits(arr) {
@@ -87,20 +112,48 @@ export default function Home(props) {
               O que voce deseja fazer ?
             </h2>
             <div className="containButton">
-              <button className={toogle ? "isSelect": ""} onClick={() => setToogle(true)}>Criar comunidade</button>
-              <button className={!toogle ? "isSelect": ""} onClick={() => setToogle(false)}>Deixar um scrap</button>
+              <button
+                className={toogle? "isSelect" : " "}
+                onClick={() => setToogle(true)}>
+                Criar comunidade
+              </button>
+              <button
+                className={!toogle? "isSelect": " "}
+                onClick={() => setToogle(false)}>
+                Criar scrap
+              </button>
             </div>
-            <div style={{ display: toogle && "none" }}>
+            <div style={{ display: !toogle ? "none" : "block" }}>
               <FormAddNewCommunit githubUser={user} fn={handleChangeCommunits} />
             </div>
-            <div style={{ display: !toogle && "none" }}>
+            <div style={{ display: !!toogle ? "none" : "block" }}>
               <FormAddNewScrap githubUser={user} fn={handleChangeScraps} />
+            </div>
+          </Box>
+          <Box >
+            <h2 className="subTitle">
+              Recados
+            </h2>
+            <div className="scrapsContainner">
+              {
+                scraps.map(item => {
+                  return (
+                    <div key={item.id} className="scrapsContain">
+                      <div>
+                        <img src={`https://github.com/${item.creatorslug}.png`} />
+                        <a href={`https://github.com/${item.creatorslug}`} target="_blank"><span>@fcventura02</span></a>
+                        <span>{format(new Date(item.createdAt), 'dd-MM-yyyy')}</span>
+                      </div>
+                      <p>{item.description}</p>
+                    </div>
+                  )
+                })
+              }
             </div>
           </Box>
         </Container>
         <Container as="aside" className="profileRelationsArea" style={{ gridArea: "profileRelationsArea" }}>
           <ProfileRelationsBox title="Meus seguidores" items={followers} />
-
           <ProfileRelationsBoxWrapper >
             <h2 className="smallTitle">
               Meus amigos ({peopleFavorites.length})
