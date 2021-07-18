@@ -45,7 +45,7 @@ export function AlurakutMenu({ githubUser }) {
 
         <button onClick={() => {
           setMenuState(!isMenuOpen)
-          document.body.style.overflow = !isMenuOpen?"hidden":"auto"
+          document.body.style.overflow = !isMenuOpen ? "hidden" : "auto"
         }}>
           {isMenuOpen && <img src={`${BASE_URL}/icons/menu-open.svg?v=${v}`} />}
           {!isMenuOpen && <img src={`${BASE_URL}/icons/menu-closed.svg?v=${v}`} />}
@@ -155,7 +155,7 @@ AlurakutMenu.Wrapper = styled.header`
         color: #ffffff;
         opacity: 1;
       }
-    } 
+    }
   }
 `;
 AlurakutMenu.Logo = styled.img`
@@ -337,6 +337,7 @@ const AlurakutLoginScreen = css`
     --textQuarternaryColor: #C5C6CA;
     --commonRadius: 8px;
   }
+  
   .loginScreen {
     padding: 16px;
     max-width: 1110px;
@@ -427,6 +428,13 @@ const AlurakutLoginScreen = css`
           border-radius: var(--commonRadius);
           margin-top: 24px;
           margin-bottom: 16px;
+        }
+        .inputNotValid{
+          border-color: red;
+          color: red;
+          &::placeholder {
+            color: red;
+          }
         }
         button {
           width: 100%;

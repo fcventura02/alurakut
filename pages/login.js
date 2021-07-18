@@ -5,24 +5,39 @@ import nookies from 'nookies';
 export default function LoginScreen() {
 	const router = useRouter();
 	const [githubUser, setGithubUser] = React.useState('');
+	const [tootgle, setTootgle] = React.useState(true);
+
 	const handleChange = (e) => {
+		!!githubUser &&
 		e.preventDefault();
-		fetch('https://alurakut.vercel.app/api/login', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ githubUser: githubUser })
-		})
-			.then(async (respostaDoServer) => {
-				const dadosDaResposta = await respostaDoServer.json()
-				const token = dadosDaResposta.token;
-				nookies.set(null, 'USER_TOKEN', token, {
-					path: '/',
-					maxAge: 86400 * 7
-				})
-				router.push('/')
+			fetch('https://alurakut.vercel.app/api/login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ githubUser: githubUser })
 			})
+				.then(async (respostaDoServer) => {
+					const dadosDaResposta = await respostaDoServer.json()
+					const token = dadosDaResposta.token;
+					nookies.set(null, 'USER_TOKEN', token, {
+						path: '/',
+						maxAge: 86400 * 7
+					})
+					fetch(`https://api.github.com/users/${githubUser}`)
+						.then(async (respostaDoServer) => {
+							const dadosDaResposta = await respostaDoServer.json()
+							if (typeof dadosDaResposta.login === 'undefined')
+								throw new Error("Usuário não existe!")
+							router.push('/')
+
+						})
+						.catch(err => {
+							setTootgle(false)
+							alert(err.message)
+						})
+				})
+				.catch(err => console.log(err))
 	}
 
 	return (
@@ -42,14 +57,16 @@ export default function LoginScreen() {
 							Acesse agora mesmo com seu usuário do <strong>GitHub</strong>!
 						</p>
 						<input
+							className={tootgle ? "" : "inputNotValid"}
 							placeholder="Usuário"
 							value={githubUser}
 							onChange={(e) => {
+								setTootgle(true)
 								setGithubUser(e.target.value)
+								console.log(!!githubUser)
 							}}
 						/>
-						{githubUser.length === 0 && (<p>Preencha o campo</p>)}
-						<button type="submit">
+						<button type="submit" disabled={githubUser.length === 0 && true}>
 							Login
 						</button>
 					</form>
