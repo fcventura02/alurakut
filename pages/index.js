@@ -7,6 +7,8 @@ import { Container, MainGrid } from '../src/components/MainGrid'
 import { ProfilesideBar } from '../src/components/ProfilesideBar'
 import { ProfileRelationsBoxWrapper, ProfileRelationsBox } from '../src/components/ProfileRelations'
 import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons'
+import FormAddNewCommunit from '../src/components/FormAddNewCommunit';
+import FormAddNewScrap from '../src/components/FormAddNewScrap';
 
 export default function Home(props) {
   const user = props.githubUser;
@@ -15,7 +17,9 @@ export default function Home(props) {
     'rafaballerini', 'marcobrunodev'
   ]
   const [communities, setCommunities] = useState([])
+  const [scraps, setScraps] = useState([])
   const [followers, setFollowers] = useState([])
+  const [toogle, setToogle] = useState(true)
 
   function apiGitHubGetFollowers() {
     fetch('https://api.github.com/users/fcventura02/followers')
@@ -57,26 +61,11 @@ export default function Home(props) {
     apiDatoPost()
   }, [])
 
-  function handleChange(e) {
-    e.preventDefault();
-    const formDatas = new FormData(e.target);
-    const comunidade = {
-      title: formDatas.get("title"),
-      imageurl: formDatas.get("image"),
-      creatorSlug: user
-    }
-    if (!!comunidade.title && !!comunidade.imageurl)
-      fetch('/api/comunidades', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(comunidade)
-      })
-        .then(async (resp) => {
-          const dados = await resp.json();
-          setCommunities([...communities, dados.registroCriado])
-        })
+  function handleChangeCommunits(arr) {
+    setCommunities([...communities, arr])
+  }
+  function handleChangeScraps(arr) {
+    setScraps([...scraps, arr])
   }
 
   return (
@@ -97,27 +86,16 @@ export default function Home(props) {
             <h2 className="subTitle">
               O que voce deseja fazer ?
             </h2>
-            <form onSubmit={(e) => handleChange(e)}>
-              <div>
-                <input
-                  placeholder="Qual vai ser o nome da sua comunidade?"
-                  name="title"
-                  aria-label="Qual vai ser o nome da sua comunidade?"
-                  type="text"
-                />
-              </div>
-              <div>
-                <input
-                  placeholder="Coloque uma URL para usarmos de capa."
-                  name="image"
-                  aria-label="Coloque uma URL para usarmos de capa."
-                  type="text"
-                />
-              </div>
-              <button>
-                Criar comunidade
-              </button>
-            </form>
+            <div className="containButton">
+              <button className={toogle ? "isSelect": ""} onClick={() => setToogle(true)}>Criar comunidade</button>
+              <button className={!toogle ? "isSelect": ""} onClick={() => setToogle(false)}>Deixar um scrap</button>
+            </div>
+            <div style={{ display: toogle && "none" }}>
+              <FormAddNewCommunit githubUser={user} fn={handleChangeCommunits} />
+            </div>
+            <div style={{ display: !toogle && "none" }}>
+              <FormAddNewScrap githubUser={user} fn={handleChangeScraps} />
+            </div>
           </Box>
         </Container>
         <Container as="aside" className="profileRelationsArea" style={{ gridArea: "profileRelationsArea" }}>
