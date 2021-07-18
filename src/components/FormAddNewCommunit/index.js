@@ -8,6 +8,7 @@ export default function FormAddNewCommunit(props) {
 		const comunidade = {
 			title: formDatas.get("title"),
 			imageurl: formDatas.get("image"),
+			description: formDatas.get("description"),
 			creatorSlug: user
 		}
 		if (!!comunidade.title && !!comunidade.imageurl)
@@ -54,6 +55,14 @@ export default function FormAddNewCommunit(props) {
 						placeholder="Coloque uma URL para usarmos de capa."
 						name="image"
 						aria-label="Coloque uma URL para usarmos de capa."
+						type="text"
+					/>
+				</div>
+				<div>
+					<input
+						placeholder="Coloque uma descrição para sua comunidade."
+						name="description"
+						aria-label="Coloque uma descrição para sua comunidade."
 						type="text"
 					/>
 				</div>
