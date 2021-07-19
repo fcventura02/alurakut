@@ -41,7 +41,7 @@ export default function Followers(props) {
           <ListCommunits>
             <Container>
               <h2>
-                Minhas comunidades
+                Meus seguidores
               </h2>
               <span className="boxMenuPath">
                 {[{ name: 'Inicio', slug: '/' }, { name: 'Meus seguidores', slug: '/followers' }].map((menuItem) => (
@@ -61,7 +61,7 @@ export default function Followers(props) {
                         />
                         <div>
                           <p>{item.name}</p>
-                          <span>{item.location}</span><br/>
+                          <span>{item.location}</span><br />
                           <span>{item.bio}</span>
                         </div>
                       </a>
