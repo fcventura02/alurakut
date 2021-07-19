@@ -23,7 +23,7 @@ export default function FormAddNewCommunit(props) {
 					.then(async (resp) => {
 						const dados = await resp.json();
 						props.fn(dados.registroCriado)
-					})
+					}).catch(err => console.log(err))
 			else {
 				console.log("url inválida")
 			}
