@@ -56,33 +56,6 @@ margin-bottom: 10px;
 }
 }
 
-.boxMenuPath{
-	a {
-			font-size: 12px;
-        color: var(--textTertiaryColor);
-        padding: 10px 15px;
-				padding-right: 5px;
-        position: relative;
-        text-decoration: none;
-				
-			&:after {
-          content: ">";
-          display: block;
-          position: absolute;
-          height: 15px;
-          margin: auto;
-          left: 0;
-          top: 0;
-          bottom: 0;
-			}
-			&:first-child{
-				padding-left: 0;
-					&:after {
-          display: none;
-				}
-			}
-	}
-}
 .infoCommunit{
 	margin-top: 10px;
 	p{

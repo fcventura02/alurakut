@@ -15,7 +15,7 @@ export const ListCommunits = styled(Box)`
 	}
 
 	.btn-novaComunidade{
-		margin: 24px 0;
+		margin: 10px 0 20px 0;
 		border-radius: "8px";
 	}
 	.container_page{

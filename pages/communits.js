@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { ListCommunits } from '../src/components/ListCommunits';
 import { Box } from '../src/components/Box';
 import FormAddNewCommunit from '../src/components/FormAddNewCommunit';
+import Link from 'next/link';
 
 export default function communitsPage(props) {
   const user = props.githubUser;
@@ -51,7 +52,7 @@ export default function communitsPage(props) {
   }
   function backPage() {
     const calcCount = contador - 6
-    const calcLimit = limitPage === communities.length ? communities.length - (communities.length - contador): limitPage - 6
+    const calcLimit = limitPage === communities.length ? communities.length - (communities.length - contador) : limitPage - 6
     setContador(calcCount < 0 ? 0 : calcCount)
     setLimitPage(calcLimit < 6 ? 6 : calcLimit)
   }
@@ -73,15 +74,19 @@ export default function communitsPage(props) {
               <h2>
                 Minhas comunidades
               </h2>
-              <span>
-                <a href='/'>Início</a> {'>'}  Minhas comunidades
-              </span>
+              <span className="boxMenuPath">
+              {[{ name: 'Inicio', slug: '/' }, { name: 'Minhas comunidades', slug: '/communits' }].map((menuItem) => (
+                <Link key={`key__${menuItem.name}`} href={`${menuItem.slug.toLocaleLowerCase()}`}>
+                  <a> {menuItem.name} </a>
+                </Link>
+              ))}
+            </span>
             </Container>
             <button className="btn-novaComunidade" onClick={() => setToogle(!toogle)}>
               Nova comunidade
             </button>
             <Box style={{ display: toogle ? "block" : "none" }}>
-              <FormAddNewCommunit githubUser={user} fn={handleChangeCommunits}/>
+              <FormAddNewCommunit githubUser={user} fn={handleChangeCommunits} />
             </Box>
             <Container className="container_page">
               <p className="contador">
@@ -101,14 +106,16 @@ export default function communitsPage(props) {
                 communities.slice(contador, limitPage).map((item) => {
                   return (
                     <li key={item.id}>
-                      <a href={`/communits/${item.id}`}>
-                        <img src={item.imageurl}
-                        />
-                        <div>
-                          <p>{item.title}</p>
-                          <span>15 membros</span>
-                        </div>
-                      </a>
+                      <Link href={`/communits/${item.id}`}>
+                        <a >
+                          <img src={item.imageurl}
+                          />
+                          <div>
+                            <p>{item.title}</p>
+                            <span>15 membros</span>
+                          </div>
+                        </a>
+                      </Link>
                     </li>
                   )
                 })

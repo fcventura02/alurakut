@@ -10,6 +10,7 @@ import { ProfileRelationsBoxWrapper, ProfileRelationsBox } from '../src/componen
 import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons'
 import FormAddNewCommunit from '../src/components/FormAddNewCommunit';
 import FormAddNewScrap from '../src/components/FormAddNewScrap';
+import Link from 'next/link'
 
 export default function Home(props) {
   const user = props.githubUser;
@@ -87,10 +88,10 @@ export default function Home(props) {
   }, [])
 
   function handleChangeCommunits(arr) {
-    setCommunities([...communities, arr])
+    setCommunities([arr, ...communities])
   }
   function handleChangeScraps(arr) {
-    setScraps([...scraps, arr])
+    setScraps([arr, ...scraps])
   }
 
   return (
@@ -113,12 +114,12 @@ export default function Home(props) {
             </h2>
             <div className="containButton">
               <button
-                className={toogle? "isSelect" : " "}
+                className={toogle ? "isSelect" : " "}
                 onClick={() => setToogle(true)}>
                 Criar comunidade
               </button>
               <button
-                className={!toogle? "isSelect": " "}
+                className={!toogle ? "isSelect" : " "}
                 onClick={() => setToogle(false)}>
                 Criar scrap
               </button>
@@ -141,7 +142,7 @@ export default function Home(props) {
                     <div key={item.id} className="scrapsContain">
                       <div>
                         <img src={`https://github.com/${item.creatorslug}.png`} />
-                        <a href={`https://github.com/${item.creatorslug}`} target="_blank"><span>@fcventura02</span></a>
+                        <a href={`https://github.com/${item.creatorslug}`} target="_blank"><span>@{item.creatorslug}</span></a>
                         <span>{format(new Date(item.createdAt), 'dd-MM-yyyy')}</span>
                       </div>
                       <p>{item.description}</p>
@@ -155,9 +156,11 @@ export default function Home(props) {
         <Container as="aside" className="profileRelationsArea" style={{ gridArea: "profileRelationsArea" }}>
           <ProfileRelationsBox title="Meus seguidores" items={followers} />
           <ProfileRelationsBoxWrapper >
-            <h2 className="smallTitle">
-              Meus amigos ({peopleFavorites.length})
-            </h2>
+            <Link href="/users">
+              <h2 className="smallTitle">
+                Meus amigos ({peopleFavorites.length})
+              </h2>
+            </Link>
             <ul>
               {
                 peopleFavorites.map((peoplefavorite) => {
@@ -175,9 +178,11 @@ export default function Home(props) {
             </ul>
           </ProfileRelationsBoxWrapper>
           <ProfileRelationsBoxWrapper >
-            <h2 className="smallTitle">
-              Minhas comunidades ({communities.length})
-            </h2>
+            <Link href="/communits">
+              <h2 className="smallTitle">
+                Minhas comunidades ({communities.length})
+              </h2>
+            </Link>
             <ul>
               {
                 communities.slice(0, 6).map((item) => {

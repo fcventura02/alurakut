@@ -1,7 +1,23 @@
+import Link from 'next/link';
 import styled from 'styled-components';
 import { Box } from '../Box';
 
 export const ProfileRelationsBoxWrapper = styled(Box)`
+
+  h2{
+    position:relative;
+    cursor: pointer;
+    &:before {
+          content: ">";
+          display: block;
+          position: absolute;
+          margin: auto;
+          top: 0;
+					right: 0;
+          bottom: 0;
+			}
+  }
+
   ul {
     display: grid;
     grid-gap: 8px;
@@ -55,9 +71,11 @@ export function ProfileRelationsBox(props) {
   const list = props.items;
   return (
     <ProfileRelationsBoxWrapper >
-      <h2 className="smallTitle">
-        {props.title}({props.items.length})
-      </h2>
+      <Link href="/followers">
+        <h2 className="smallTitle">
+          {props.title}({props.items.length})
+        </h2>
+      </Link>
       <ul>
         {
           !!list && list.slice(0, 6).map((item) => {
